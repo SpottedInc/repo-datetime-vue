@@ -1,6 +1,8 @@
 <template>
   <div class="repo-datetime-vue">
     <div class="repo-datetime-vue-wrapper">
+      <input type="hidden" :name="id" :value="calculatedDate">
+
       <!-- Year -->
       <div :class="[selectWrapperClassName]" v-if="isRequested('y')">
         <select
@@ -110,6 +112,10 @@ const defaultMonths = {
 
 export default {
   props: {
+    id: {
+      type: String,
+      required: false
+    },
     default: {
       type: String,
       required: false
