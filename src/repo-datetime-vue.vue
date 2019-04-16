@@ -128,15 +128,18 @@ export default {
     },
     yearSuffix: {
       type: String,
-      required: false
+      required: false,
+      default: ''
     },
     monthSuffix: {
       type: String,
-      required: false
+      required: false,
+      default: ''
     },
     daySuffix: {
       type: String,
-      required: false
+      required: false,
+      default: ''
     },
     hourClock: {
       type: String,
