@@ -1,5 +1,5 @@
 // Import vue component
-import component from './vue-datetime-picker-2.vue';
+import component from './repo-datetime-vue.vue';
 
 // install function executed by Vue.use()
 function install(Vue) {

@@ -1,12 +1,12 @@
 {
-  "name": "vue-datetime-picker-2",
+  "name": "repo-datetime-vue",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/vue-datetime-picker-2.umd.js",
-  "module": "dist/vue-datetime-picker-2.esm.js",
-  "unpkg": "dist/vue-datetime-picker-2.min.js",
+  "main": "dist/repo-datetime-vue.umd.js",
+  "module": "dist/repo-datetime-vue.esm.js",
+  "unpkg": "dist/repo-datetime-vue.min.js",
   "browser": {
-    "./sfc": "src/vue-datetime-picker-2.vue"
+    "./sfc": "src/repo-datetime-vue.vue"
   },
   "files": [
     "dist/*",

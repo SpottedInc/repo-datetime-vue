@@ -43,7 +43,7 @@ if (!argv.format || argv.format === 'es') {
   const esConfig = {
     ...baseConfig,
     output: {
-      file: 'dist/vue-datetime-picker-2.esm.js',
+      file: 'dist/repo-datetime-vue.esm.js',
       format: 'esm',
       exports: 'named'
     },
@@ -65,7 +65,7 @@ if (!argv.format || argv.format === 'umd') {
     external,
     output: {
       compact: true,
-      file: 'dist/vue-datetime-picker-2.umd.js',
+      file: 'dist/repo-datetime-vue.umd.js',
       format: 'umd',
       name: 'VueDatetimePicker2',
       exports: 'named',
@@ -89,7 +89,7 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: 'dist/vue-datetime-picker-2.min.js',
+      file: 'dist/repo-datetime-vue.min.js',
       format: 'iife',
       name: 'VueDatetimePicker2',
       exports: 'named',

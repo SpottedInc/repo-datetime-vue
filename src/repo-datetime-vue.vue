@@ -1,83 +1,93 @@
 <template>
-  <div class="vue-datetime-picker-2">
-    <!-- Year -->
-    <div :class="[selectWrapperClassName]" v-if="isRequested('y')">
-      <select
-        v-model="selectedYear"
-        @change="updateDays()"
-        :class="[selectClassName, selectYearClassName]"
-      >
-        <option
-          v-for="(year, index) in years"
-          :key="index"
-          :value="year.year"
-          v-html="getYearForDisplay(year.year)"
-        ></option>
-      </select>
-    </div>
+  <div class="repo-datetime-vue">
+    <div class="repo-datetime-vue-wrapper">
+      <!-- Year -->
+      <div :class="[selectWrapperClassName]" v-if="isRequested('y')">
+        <select
+          v-model="selectedYear"
+          @change="updateDays()"
+          :class="[selectClassName, selectYearClassName]"
+        >
+          <option
+            v-for="(year, index) in years"
+            :key="index"
+            :value="year.year"
+            v-html="getYearForDisplay(year.year)"
+          ></option>
+        </select>
+      </div>
 
-    <!-- Month -->
-    <div :class="[selectWrapperClassName]" v-if="isRequested('m')">
-      <select
-        v-model="selectedMonth"
-        @change="updateDays()"
-        :class="[selectClassName, selectMonthClassName]"
-      >
-        <option
-          v-for="(month, index) in months"
-          :value="index"
-          :key="month.month"
-          v-html="getMonthForDisplay(month.month)"
-        ></option>
-      </select>
-    </div>
+      <!-- Month -->
+      <div :class="[selectWrapperClassName]" v-if="isRequested('m')">
+        <select
+          v-model="selectedMonth"
+          @change="updateDays()"
+          :class="[selectClassName, selectMonthClassName]"
+        >
+          <option
+            v-for="(month, index) in months"
+            :value="index"
+            :key="month.month"
+            v-html="getMonthForDisplay(month.month)"
+          ></option>
+        </select>
+      </div>
 
-    <!-- Day -->
-    <div :class="[selectWrapperClassName]" v-if="isRequested('d')">
-      <select v-model="selectedDay" :class="[selectClassName, selectDayClassName]">
-        <option
-          v-for="(day, index) in days"
-          :key="index"
-          :value="day.day"
-          v-html="getDayForDisplay(day.day)"
-        ></option>
-      </select>
-    </div>
+      <!-- Day -->
+      <div :class="[selectWrapperClassName]" v-if="isRequested('d')">
+        <select v-model="selectedDay" :class="[selectClassName, selectDayClassName]">
+          <option
+            v-for="(day, index) in days"
+            :key="index"
+            :value="day.day"
+            v-html="getDayForDisplay(day.day)"
+          ></option>
+        </select>
+      </div>
 
-    <!-- Hour -->
-    <div :class="[selectWrapperClassName]" v-if="isRequested('h')">
-      <select v-model="selectedHour" :class="[selectClassName, selectDayClassName]">
-        <option
-          v-for="(hour, index) in hours"
-          :key="index"
-          :value="index"
-          v-html="getHourForDisplay(hour.hour, index)"
-        ></option>
-      </select>
-    </div>
+      <!-- Hour -->
+      <div :class="[selectWrapperClassName]" v-if="isRequested('h')">
+        <select v-model="selectedHour" :class="[selectClassName, selectDayClassName]">
+          <option
+            v-for="(hour, index) in hours"
+            :key="index"
+            :value="hour.hour"
+            v-html="getHourForDisplay(hour.hour, index)"
+          ></option>
+        </select>
+      </div>
 
-    <!-- Minute -->
-    <div :class="[selectWrapperClassName]" v-if="isRequested('i')">
-      <select v-model="selectedMinute" :class="[selectClassName, selectDayClassName]">
-        <option
-          v-for="(minute, index) in minutes"
-          :key="index"
-          :value="minute.minute"
-          v-html="getMinuteForDisplay(minute.minute)"
-        ></option>
-      </select>
-    </div>
+      <!-- Minute -->
+      <div :class="[selectWrapperClassName]" v-if="isRequested('i')">
+        <select v-model="selectedMinute" :class="[selectClassName, selectDayClassName]">
+          <option
+            v-for="(minute, index) in minutes"
+            :key="index"
+            :value="minute.minute"
+            v-html="getMinuteForDisplay(minute.minute)"
+          ></option>
+        </select>
+      </div>
 
-    <!-- Second -->
-    <div :class="[selectWrapperClassName]" v-if="isRequested('s')">
-      <select v-model="selectedSecond" :class="[selectClassName, selectDayClassName]">
-        <option
-          v-for="(second, index) in seconds"
-          :key="index"
-          :value="second.second"
-          v-html="getSecondForDisplay(second.second)"
-        ></option>
-      </select>
+      <!-- Second -->
+      <div :class="[selectWrapperClassName]" v-if="isRequested('s')">
+        <select v-model="selectedSecond" :class="[selectClassName, selectDayClassName]">
+          <option
+            v-for="(second, index) in seconds"
+            :key="index"
+            :value="second.second"
+            v-html="getSecondForDisplay(second.second)"
+          ></option>
+        </select>
+      </div>
+
+      <!-- PM or AM -->
+      <div :class="[selectWrapperClassName]" v-if="hourClock === '12-hour'">
+        <select v-model="selectedShift" :class="[selectClassName, selectDayClassName]">
+          <option value="am">am</option>
+          <option value="pm">pm</option>
+        </select>
+      </div>
     </div>
   </div>
 </template>
@@ -99,7 +109,6 @@ const defaultMonths = {
 };
 
 export default {
-  name: 'VueDatetimePicker2',
   props: {
     default: {
       type: String,
@@ -173,6 +182,7 @@ export default {
   data() {
     return {
       days: [],
+      selectedShift: '',
       selectedSecond: '',
       selectedMinute: '',
       selectedHour: '',
@@ -216,8 +226,17 @@ export default {
           ? this.selectedMonth + 1
           : `0${this.selectedMonth + 1}`;
 
-      const hour =
-        this.selectedHour >= 10 ? this.selectedHour : `0${this.selectedHour}`;
+      let hour;
+
+      if (this.hourClock === '12-hour') {
+        hour =
+          this.getHourIn24Base(this.selectedHour) >= 10
+            ? this.getHourIn24Base(this.selectedHour)
+            : `0${this.getHourIn24Base(this.selectedHour)}`;
+      } else {
+        hour =
+          this.selectedHour >= 10 ? this.selectedHour : `0${this.selectedHour}`;
+      }
 
       const minute =
         this.selectedMinute >= 10
@@ -231,7 +250,6 @@ export default {
 
       return `${this.selectedYear}-${month}-${day} ${hour}:${minute}:${second}`;
     },
-
     // The alternative names of months
     dividedNamesOfMonths() {
       if (this.monthsNames) {
@@ -271,9 +289,6 @@ export default {
       let hours = [];
 
       if (this.hourClock == '12-hour') {
-        for (let i = 0; i < 12; i++) {
-          hours.push(i);
-        }
         for (let i = 0; i < 12; i++) {
           hours.push(i);
         }
@@ -327,12 +342,48 @@ export default {
         years.push(i);
       }
 
+      const is_year_on_list = years.find(
+        year => year == this.specifiedDate.getFullYear()
+      );
+
+      if (!is_year_on_list) {
+        if (this.specifiedDate.getFullYear() < this.min) {
+          years.unshift(this.specifiedDate.getFullYear());
+        } else {
+          years.push(this.specifiedDate.getFullYear());
+        }
+      }
+
       return years.map(year => {
         return { year, selected: year === this.selectedYear };
       });
     }
   },
   methods: {
+    getHourIn24Base() {
+      if (this.selectedShift === 'am') {
+        return this.selectedHour;
+      } else if (this.selectedShift === 'pm') {
+        return parseInt(this.selectedHour, 10) + 12;
+      }
+
+      return this.selectedHour;
+    },
+    getHourIn12Base(hour) {
+      let shift;
+      let vhouer;
+
+      if (hour > 11) {
+        vhouer = parseInt(hour, 10) - 12;
+        shift = 'pm';
+      } else if (hour < 12) {
+        vhouer = hour;
+        shift = 'am';
+      }
+
+      return { hour: vhouer, shift: shift };
+    },
+
     getYearForDisplay(year) {
       return year + this.yearSuffix;
     },
@@ -345,10 +396,7 @@ export default {
       return (day < 10 ? '0' + day : day) + this.daySuffix;
     },
     getHourForDisplay(hour, index) {
-      return (
-        (hour < 10 ? '0' + hour : hour) +
-        (this.hourClock === '12-hour' ? (index >= 12 ? ' p.m' : ' a.m') : '')
-      );
+      return hour < 10 ? '0' + hour : hour;
     },
     getMinuteForDisplay(minute) {
       return minute < 10 ? '0' + minute : minute;
@@ -410,7 +458,15 @@ export default {
 
       this.selectedSecond = date.getSeconds();
       this.selectedMinute = date.getMinutes();
-      this.selectedHour = date.getHours();
+
+      if (this.hourClock === '12-hour') {
+        let current_houer = this.getHourIn12Base(date.getHours());
+        this.selectedHour = current_houer.hour;
+        this.selectedShift = current_houer.shift;
+      } else {
+        this.selectedHour = date.getHours();
+      }
+
       this.selectedDay = date.getDate();
       this.selectedMonth = date.getMonth();
       this.selectedYear = date.getFullYear();
@@ -429,40 +485,31 @@ export default {
 </script>
 
 <style scoped>
-body {
-  font-family: sans-serif;
+.repo-datetime-vue {
+  width: 100%;
+  border: 1px solid #ccc;
 }
 
-.vue-datetime-picker-2 {
-  display: table-row;
+.repo-datetime-vue-wrapper {
 }
 
 .date-dropdown-select-wrapper {
   position: relative;
-  display: table-cell;
+  width: 80px;
+  display: inline-block;
 }
 
-.vue-datetime-picker-2 select {
+.repo-datetime-vue select {
   width: 100%;
   float: left;
   border: 0 none;
   outline: none;
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
-  padding-left: 10px;
+  padding-right: 16px;
   background: #fff;
   text-align-last: center;
   height: 40px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
-
-.date-dropdown-select-wrapper:first-child select {
-  border-left: 1px solid #ccc;
-}
-
-.date-dropdown-select-wrapper:last-child select {
-  border-right: 1px solid #ccc;
 }
 
 /* Smartphones (portrait and landscape) ----------- */
@@ -473,7 +520,7 @@ body {
     display: block;
     position: absolute;
     top: 50%;
-    right: 7px;
+    right: 3px;
     margin-top: -3px;
     width: 0;
     height: 0;
