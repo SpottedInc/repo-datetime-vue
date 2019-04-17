@@ -1,7 +1,7 @@
 <template>
   <div class="repo-datetime-vue">
     <div class="repo-datetime-vue-wrapper">
-      <input type="hidden" :name="id" :value="formatedDate">
+      <input type="hidden" :id="id" :name="name" :value="formatedDate">
 
       <!-- Year -->
       <div :class="[selectWrapperClassName]" v-if="isRequested('y')">
@@ -116,6 +116,11 @@ export default {
       type: String,
       required: false
     },
+    name: {
+      type: String,
+      required: false
+    },
+
     default: {
       type: String,
       required: false
