@@ -165,7 +165,7 @@ export default {
     selectClassName: {
       type: String,
       required: false,
-      default: 'date-dropdown-select'
+      default: 'repo-datetime-vue-select'
     },
     selectDayClassName: {
       type: String,
@@ -185,12 +185,12 @@ export default {
     selectWrapperClassName: {
       type: String,
       required: false,
-      default: 'date-dropdown-select-wrapper'
+      default: 'repo-datetime-vue-select-wrapper'
     },
     containerClassName: {
       type: String,
       required: false,
-      default: 'date-dropdown-container'
+      default: 'repo-datetime-vue-container'
     }
   },
   data() {
@@ -551,13 +551,13 @@ export default {
 .repo-datetime-vue-wrapper {
 }
 
-.date-dropdown-select-wrapper {
+.repo-datetime-vue-select-wrapper {
   position: relative;
   width: 80px;
   display: inline-block;
 }
 
-.repo-datetime-vue select {
+.repo-datetime-vue-select select {
   width: 100%;
   border: 0 none;
   outline: none;
@@ -573,7 +573,7 @@ export default {
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 480px) {
   /* Styles */
-  .date-dropdown-select-wrapper::after {
+  .repo-datetime-vue-select-wrapper::after {
     content: ' ';
     display: block;
     position: absolute;
