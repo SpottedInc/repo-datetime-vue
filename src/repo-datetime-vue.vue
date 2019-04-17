@@ -544,6 +544,8 @@ export default {
 .repo-datetime-vue {
   width: 100%;
   border: 1px solid #ccc;
+  display: inline-block;
+  margin: 5px 0;
 }
 
 .repo-datetime-vue-wrapper {
@@ -566,6 +568,7 @@ export default {
   background: #fff;
   text-align-last: center;
   height: 40px;
+  float: left;
 }
 
 /* Smartphones (portrait and landscape) ----------- */
