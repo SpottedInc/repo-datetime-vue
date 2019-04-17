@@ -557,7 +557,7 @@ export default {
   display: inline-block;
 }
 
-.repo-datetime-vue-select select {
+.repo-datetime-vue-select-wrapper .repo-datetime-vue-select {
   width: 100%;
   border: 0 none;
   outline: none;
