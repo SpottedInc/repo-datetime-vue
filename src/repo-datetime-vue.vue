@@ -155,7 +155,7 @@ export default {
     outputFormat: {
       type: String,
       required: false,
-      default: 'ymdhis'
+      default: 'y-m-d h:i:s'
     },
     displayFormat: {
       type: String,
@@ -559,7 +559,6 @@ export default {
 
 .repo-datetime-vue select {
   width: 100%;
-  float: left;
   border: 0 none;
   outline: none;
   -webkit-appearance: none;
@@ -568,7 +567,7 @@ export default {
   background: #fff;
   text-align-last: center;
   height: 40px;
-  float: left;
+  margin: 0;
 }
 
 /* Smartphones (portrait and landscape) ----------- */
