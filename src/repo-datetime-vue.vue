@@ -542,7 +542,6 @@ export default {
 
 <style scoped>
 .repo-datetime-vue {
-  width: 100%;
   border: 1px solid #ccc;
   display: inline-block;
   margin: 5px 0;
@@ -558,7 +557,6 @@ export default {
 }
 
 .repo-datetime-vue-select-wrapper .repo-datetime-vue-select {
-  width: 100%;
   border: 0 none;
   outline: none;
   -webkit-appearance: none;
