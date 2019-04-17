@@ -1,7 +1,7 @@
 <template>
   <div class="repo-datetime-vue">
     <div class="repo-datetime-vue-wrapper">
-      <input type="hidden" :name="id" :value="calculatedDate">
+      <input type="hidden" :name="id" :value="formatedDate">
 
       <!-- Year -->
       <div :class="[selectWrapperClassName]" v-if="isRequested('y')">
@@ -152,6 +152,11 @@ export default {
       required: false,
       default: '24-hour'
     },
+    outputFormat: {
+      type: String,
+      required: false,
+      default: 'ymdhis'
+    },
     displayFormat: {
       type: String,
       required: false,
@@ -224,6 +229,48 @@ export default {
       }
 
       return;
+    },
+    formatedDate() {
+      const day =
+        this.selectedDay >= 10 ? this.selectedDay : `0${this.selectedDay}`;
+
+      const month =
+        this.selectedMonth + 1 >= 10
+          ? this.selectedMonth + 1
+          : `0${this.selectedMonth + 1}`;
+
+      let hour;
+
+      if (this.hourClock === '12-hour') {
+        hour =
+          this.getHourIn24Base(this.selectedHour) >= 10
+            ? this.getHourIn24Base(this.selectedHour)
+            : `0${this.getHourIn24Base(this.selectedHour)}`;
+      } else {
+        hour =
+          this.selectedHour >= 10 ? this.selectedHour : `0${this.selectedHour}`;
+      }
+
+      const minute =
+        this.selectedMinute >= 10
+          ? this.selectedMinute
+          : `0${this.selectedMinute}`;
+
+      const second =
+        this.selectedSecond >= 10
+          ? this.selectedSecond
+          : `0${this.selectedSecond}`;
+
+      let output = this.outputFormat;
+
+      output = output.replace(/y/gi, this.selectedYear);
+      output = output.replace(/m/gi, month);
+      output = output.replace(/d/gi, day);
+      output = output.replace(/h/gi, hour);
+      output = output.replace(/i/gi, minute);
+      output = output.replace(/s/gi, second);
+
+      return output;
     },
     // Returns a formatted date e.g. 01.02.2018.
     calculatedDate() {
