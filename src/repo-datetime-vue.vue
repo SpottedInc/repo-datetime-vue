@@ -491,8 +491,8 @@ export default {
     // Send data to upper component.
     sendDate() {
       const date = this.format
-        ? this.format(this.calculatedDate)
-        : this.calculatedDate;
+        ? this.format(this.formatedDate)
+        : this.formatedDate;
       this.$emit('input', date);
     },
     // Set the initial date.
