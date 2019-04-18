@@ -545,7 +545,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .repo-datetime-vue {
   border: 1px solid #ccc;
   display: inline-block;
