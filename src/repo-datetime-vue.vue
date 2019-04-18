@@ -557,8 +557,10 @@ export default {
 
 .repo-datetime-vue-select-wrapper {
   position: relative;
-  width: 80px;
+  width: 50px;
   display: inline-block;
+  padding-right: 14px;
+  text-align: center;
 }
 
 .repo-datetime-vue-select-wrapper .repo-datetime-vue-select {
@@ -566,7 +568,6 @@ export default {
   outline: none;
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
-  padding-right: 16px;
   background: #fff;
   text-align-last: center;
   height: 40px;
