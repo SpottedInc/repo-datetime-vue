@@ -513,9 +513,16 @@ export default {
     },
     // Send data to upper component.
     sendDate() {
-      const date = this.format
+      let date = this.format
         ? this.format(this.formatedDate)
         : this.formatedDate;
+
+      date_for_test = new Date(date);
+
+      if (isNaN(date_for_test.getTime())) {
+        return;
+      }
+
       this.$emit('input', date);
     },
     // Set the initial date.

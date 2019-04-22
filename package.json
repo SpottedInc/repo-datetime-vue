@@ -1,6 +1,6 @@
 {
   "name": "repo-datetime-vue",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "",
   "main": "dist/repo-datetime-vue.umd.js",
   "module": "dist/repo-datetime-vue.esm.js",
