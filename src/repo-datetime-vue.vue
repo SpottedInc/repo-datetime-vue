@@ -517,7 +517,7 @@ export default {
         ? this.format(this.formatedDate)
         : this.formatedDate;
 
-      date_for_test = new Date(date);
+      const date_for_test = new Date(date);
 
       if (isNaN(date_for_test.getTime())) {
         return;
