@@ -501,7 +501,6 @@ export default {
       }
 
       this.$emit('input', date);
-      this.$emit('change', date);
     },
     // Set the initial date.
     setDate() {
@@ -548,6 +547,7 @@ export default {
   },
   updated() {
     // Send the data on change
+    this.$emit('change', date);
     this.sendDate();
   }
 };
