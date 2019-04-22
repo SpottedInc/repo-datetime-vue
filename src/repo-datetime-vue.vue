@@ -7,7 +7,7 @@
       <div :class="[selectWrapperClassName]" v-if="isRequested('y')">
         <select
           v-model="selectedYear"
-          @change="updateDays();change();"
+          @change="updateDays();"
           :class="[selectClassName, selectYearClassName]"
         >
           <option
@@ -23,7 +23,7 @@
       <div :class="[selectWrapperClassName]" v-if="isRequested('m')">
         <select
           v-model="selectedMonth"
-          @change="updateDays();change();"
+          @change="updateDays();"
           :class="[selectClassName, selectMonthClassName]"
         >
           <option
@@ -37,11 +37,7 @@
 
       <!-- Day -->
       <div :class="[selectWrapperClassName]" v-if="isRequested('d')">
-        <select
-          v-model="selectedDay"
-          :class="[selectClassName, selectDayClassName]"
-          @change="change"
-        >
+        <select v-model="selectedDay" :class="[selectClassName, selectDayClassName]">
           <option
             v-for="(day, index) in days"
             :key="index"
@@ -53,11 +49,7 @@
 
       <!-- Hour -->
       <div :class="[selectWrapperClassName]" v-if="isRequested('h')">
-        <select
-          v-model="selectedHour"
-          :class="[selectClassName, selectDayClassName]"
-          @change="change"
-        >
+        <select v-model="selectedHour" :class="[selectClassName, selectDayClassName]">
           <option
             v-for="(hour, index) in hours"
             :key="index"
@@ -69,11 +61,7 @@
 
       <!-- Minute -->
       <div :class="[selectWrapperClassName]" v-if="isRequested('i')">
-        <select
-          v-model="selectedMinute"
-          :class="[selectClassName, selectDayClassName]"
-          @change="change"
-        >
+        <select v-model="selectedMinute" :class="[selectClassName, selectDayClassName]">
           <option
             v-for="(minute, index) in minutes"
             :key="index"
@@ -85,11 +73,7 @@
 
       <!-- Second -->
       <div :class="[selectWrapperClassName]" v-if="isRequested('s')">
-        <select
-          v-model="selectedSecond"
-          :class="[selectClassName, selectDayClassName]"
-          @change="change"
-        >
+        <select v-model="selectedSecond" :class="[selectClassName, selectDayClassName]">
           <option
             v-for="(second, index) in seconds"
             :key="index"
@@ -101,11 +85,7 @@
 
       <!-- PM or AM -->
       <div :class="[selectWrapperClassName]" v-if="hourClock === '12-hour'">
-        <select
-          v-model="selectedShift"
-          :class="[selectClassName, selectDayClassName]"
-          @change="change"
-        >
+        <select v-model="selectedShift" :class="[selectClassName, selectDayClassName]">
           <option value="am">am</option>
           <option value="pm">pm</option>
         </select>
@@ -441,9 +421,6 @@ export default {
     }
   },
   methods: {
-    change() {
-      this.$emit('change', this.formatedDate);
-    },
     getHourIn24Base() {
       if (this.selectedShift === 'am') {
         return this.selectedHour;
@@ -524,6 +501,7 @@ export default {
       }
 
       this.$emit('input', date);
+      this.$emit('change', date);
     },
     // Set the initial date.
     setDate() {
