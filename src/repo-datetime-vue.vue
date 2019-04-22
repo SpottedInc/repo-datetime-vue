@@ -547,7 +547,7 @@ export default {
   },
   updated() {
     // Send the data on change
-    this.$emit('change', date);
+    this.$emit('change', this.formatedDate);
     this.sendDate();
   }
 };
