@@ -427,7 +427,7 @@ export default {
         year => year == this.specifiedDate.getFullYear()
       );
 
-      if (!is_year_on_list) {
+      if (!is_year_on_list && this.default) {
         if (this.specifiedDate.getFullYear() < this.min) {
           years.unshift(this.specifiedDate.getFullYear());
         } else {
