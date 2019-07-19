@@ -121,16 +121,44 @@ export default {
       required: false
     },
 
+    // Full date given initially
     default: {
       type: String,
       required: false
     },
+    // Min year
     min: {
-      type: String,
+      type: Number,
+      required: false,
+      default: 1900
+    },
+    // Max year
+    max: {
+      type: Number,
       required: false
     },
-    max: {
-      type: String,
+    stepYear: {
+      type: Number,
+      required: false
+    },
+    stepMonth: {
+      type: Number,
+      required: false
+    },
+    stepDay: {
+      type: Number,
+      required: false
+    },
+    stepHour: {
+      type: Number,
+      required: false
+    },
+    stepMinute: {
+      type: Number,
+      required: false
+    },
+    stepSecond: {
+      type: Number,
       required: false
     },
     monthsNames: {
@@ -222,7 +250,8 @@ export default {
     // The minimum date the will allow user to select.
     minDate() {
       if (this.min) {
-        return new Date(this.min);
+        
+        return new Date(this.min.toString());
       }
 
       return;
@@ -230,45 +259,72 @@ export default {
     // The maximum date the will allow user to select.
     maxDate() {
       if (this.max) {
-        return new Date(this.max);
+        return new Date(this.max.toString());
       }
 
       return;
     },
     formatedDate() {
-      const day =
-        this.selectedDay >= 10 ? this.selectedDay : `0${this.selectedDay}`;
 
-      const month =
+      let year, month, day, hour, minute, second;
+
+      // Year
+      if (this.selectedYear !== '' && this.selectedYear !== null) {
+        year = this.selectedYear;
+      } else if (this.min !== '' && this.min !== null) {
+        year = this.min;
+      } else {
+        year = '1900'; // Fallback
+      }
+
+      // Month
+      if ( this.selectedMonth !== '' && this.selectedMonth !== null) {
+        month =
         this.selectedMonth + 1 >= 10
           ? this.selectedMonth + 1
           : `0${this.selectedMonth + 1}`;
-
-      let hour;
-
-      if (this.hourClock === '12-hour') {
-        hour =
-          this.getHourIn24Base(this.selectedHour) >= 10
-            ? this.getHourIn24Base(this.selectedHour)
-            : `0${this.getHourIn24Base(this.selectedHour)}`;
       } else {
-        hour =
-          this.selectedHour >= 10 ? this.selectedHour : `0${this.selectedHour}`;
+        month = '01'; // Fallback
       }
 
-      const minute =
-        this.selectedMinute >= 10
-          ? this.selectedMinute
-          : `0${this.selectedMinute}`;
+      // Day
+      if (this.selectedDay !== '' && this.selectedDay !== null) {
+        day =
+          this.selectedDay >= 10 ? this.selectedDay : `0${this.selectedDay}`;
+      } else {
+        day = '01';
+      }
 
-      const second =
-        this.selectedSecond >= 10
-          ? this.selectedSecond
-          : `0${this.selectedSecond}`;
+      // Hour
+      if (this.selectedHour !== '' && this.selectedHour !== null) {
+        // Convert to 23 base
+        hour = this.hourClock === '12-hour' ? his.getHourIn24Base(this.selectedHour) : this.selectedHour;
+        hour = hour >= 10 ? hour : `0${hour}`;
+      } else {
+        hour = '00';
+      }
+    
+      // Minute
+      if (this.selectedMinute !== '' && this.selectedMinute !== null) {
+        minute =
+          this.selectedMinute >= 10
+            ? this.selectedMinute
+            : `0${this.selectedMinute}`;
+      } else {
+        minute = '00';
+      }
+
+      // Second
+      if (this.selectedSecond !== '' && this.selectedSecond !== null) {
+        second =
+          this.selectedSecond >= 10
+            ? this.selectedSecond
+            : `0${this.selectedSecond}`;
+      }
 
       let output = this.outputFormat;
 
-      output = output.replace(/y/gi, this.selectedYear);
+      output = output.replace(/y/gi, year);
       output = output.replace(/m/gi, month);
       output = output.replace(/d/gi, day);
       output = output.replace(/h/gi, hour);
@@ -322,8 +378,9 @@ export default {
     // Computes a list of seconds.
     seconds() {
       let seconds = [];
+      const step = this.stepSecond || 1;
 
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 60; i+=step) {
         seconds.push(i);
       }
 
@@ -335,8 +392,9 @@ export default {
     // Computes a list of minutes.
     minutes() {
       let minutes = [];
+      const step = this.stepMinute || 1;
 
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 60; i+=step) {
         minutes.push(i);
       }
 
@@ -348,13 +406,14 @@ export default {
     // Computes a list of hour.
     hours() {
       let hours = [];
+      const step = this.stepHour || 1;
 
       if (this.hourClock == '12-hour') {
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 12; i+=step) {
           hours.push(i);
         }
       } else if (this.hourClock == '24-hour') {
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 24; i+=step) {
           hours.push(i);
         }
       }
@@ -367,8 +426,9 @@ export default {
     // Computes a list of month.
     months() {
       let months = [];
+      const step = this.stepMonth || 1;
 
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 12; i+=step) {
         if (this.dividedNamesOfMonths) {
           months.push(this.dividedNamesOfMonths[i]);
         } else {
@@ -384,6 +444,7 @@ export default {
     years() {
       // Set the first year of the array.
       let firstYear;
+      const step = this.stepYear || 1;
 
       if (this.min) {
         firstYear = this.minDate.getFullYear();
@@ -399,7 +460,7 @@ export default {
 
       let years = [];
 
-      for (let i = firstYear, len = firstYear + through; i < len; i++) {
+      for (let i = firstYear, len = firstYear + through; i < len; i+=step) {
         years.push(i);
       }
 
@@ -470,6 +531,7 @@ export default {
     },
     getDays() {
       let days = [];
+      const step = this.stepDay || 1;
 
       let daysNumberOfMonth = new Date(
         this.selectedYear,
@@ -477,7 +539,7 @@ export default {
         0
       ).getDate();
 
-      for (let i = 1; i < daysNumberOfMonth + 1; i++) {
+      for (let i = 1; i < daysNumberOfMonth + 1; i+=step) {
         days.push(i);
       }
 

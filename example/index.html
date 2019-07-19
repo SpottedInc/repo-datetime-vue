@@ -15,12 +15,16 @@
       <div style="width: 45%; ">
         <Vue-Datetime-Picker2
           default=""
-          min="1960"
-          max="2019"
+          :min="1960"
+          :max="2019"
+          :step-year="10"
+          :step-hour="4"
+          :step-minute="15"
+          :step-second="15"
           v-model="selectedDate"
           :months-names="months"
-          display-format="ymd"
-          output-format="y-m-d"
+          display-format="ymd his"
+          output-format="y-m-d h:i:s"
           id="date_foundation"
           v-on:change="changed"
         ></Vue-Datetime-Picker2>
