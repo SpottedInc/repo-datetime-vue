@@ -13,18 +13,21 @@
         You selected: <strong>{{ selectedDate }}</strong>
       </p>
       <div style="width: 45%; ">
-        <datepicker
+        <Vue-Datetime-Picker2
           default=""
-          min="1960"
-          max="2019"
+          :min="1960"
+          :max="2019"
+          :step-year="10"
+          :step-hour="4"
+          :step-minute="15"
+          :step-second="15"
           v-model="selectedDate"
           :months-names="months"
-          hour-clock="24-hour"
-          display-format="ymdhis"
-          output-format="y-m-d"
+          display-format="ymd his"
+          output-format="y-m-d h:i:s"
           id="date_foundation"
           v-on:change="changed"
-        ></datepicker>
+        ></Vue-Datetime-Picker2>
       </div>
     </div>
     <script
@@ -35,7 +38,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="../dist/repo-datetime-vue.min.js"></script>
     <script>
-      Vue.component('datepicker', VueDatetimePicker2);
+      Vue.component(VueDatetimePicker2);
 
       var app = new Vue({
         el: '#app',
