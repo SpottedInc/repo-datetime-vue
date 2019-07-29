@@ -116,114 +116,144 @@ export default {
       type: String,
       required: false
     },
+
     name: {
       type: String,
       required: false
     },
 
     // Full date given initially
-    default: {
+    value: {
       type: String,
       required: false
     },
+
     // Min year
-    min: {
+    minYear: {
       type: Number,
       required: false,
       default: 1900
     },
+
     // Max year
-    max: {
+    maxYear: {
       type: Number,
       required: false
     },
+
     stepYear: {
       type: Number,
       required: false
     },
+
     stepMonth: {
       type: Number,
       required: false
     },
+
     stepDay: {
       type: Number,
       required: false
     },
+
     stepHour: {
       type: Number,
       required: false
     },
+
     stepMinute: {
       type: Number,
       required: false
     },
+
     stepSecond: {
       type: Number,
       required: false
     },
-    monthsNames: {
+
+    monthNames: {
       type: String,
       required: false
     },
+
     yearSuffix: {
       type: String,
       required: false,
       default: ''
     },
+
     monthSuffix: {
       type: String,
       required: false,
       default: ''
     },
+
     daySuffix: {
       type: String,
       required: false,
       default: ''
     },
+
     hourClock: {
       type: String,
       required: false,
       default: '24-hour'
     },
+
     outputFormat: {
       type: String,
       required: false,
       default: 'y-m-d h:i:s'
     },
+
     displayFormat: {
       type: String,
       required: false,
       default: 'ymdhis'
     },
+
     selectClassName: {
       type: String,
       required: false,
       default: 'repo-datetime-vue-select'
     },
+
     selectDayClassName: {
       type: String,
       required: false,
       default: 'day'
     },
+
     selectMonthClassName: {
       type: String,
       required: false,
       default: 'month'
     },
+
     selectYearClassName: {
       type: String,
       required: false,
       default: 'year'
     },
+
     selectWrapperClassName: {
       type: String,
       required: false,
       default: 'repo-datetime-vue-select-wrapper'
     },
+
     containerClassName: {
       type: String,
       required: false,
       default: 'repo-datetime-vue-container'
+    },
+
+    // If any field is missing, formattedDate(final input value) will be an empty string.
+    // When false, fallback will be applied
+    emptyIfNoInput: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data() {
@@ -241,25 +271,25 @@ export default {
   computed: {
     // Returns if there are default date settings.
     initialDate() {
-      return !!(this.default || this.min);
+      return !!(this.value || this.minYear);
     },
     // The date property, converted to a date.
     specifiedDate() {
-      return new Date(this.default);
+      return new Date(this.value);
     },
     // The minimum date the will allow user to select.
     minDate() {
-      if (this.min) {
+      if (this.minYear) {
         
-        return new Date(this.min.toString());
+        return new Date(this.minYear.toString());
       }
 
       return;
     },
     // The maximum date the will allow user to select.
     maxDate() {
-      if (this.max) {
-        return new Date(this.max.toString());
+      if (this.maxYear) {
+        return new Date(this.maxYear.toString());
       }
 
       return;
@@ -271,8 +301,8 @@ export default {
       // Year
       if (this.selectedYear !== '' && this.selectedYear !== null) {
         year = this.selectedYear;
-      } else if (this.min !== '' && this.min !== null) {
-        year = this.min;
+      } else if (this.minYear !== '' && this.minYear !== null) {
+        year = this.minYear;
       } else {
         year = '1900'; // Fallback
       }
@@ -369,8 +399,8 @@ export default {
     },
     // The alternative names of months
     dividedNamesOfMonths() {
-      if (this.monthsNames) {
-        return this.monthsNames.replace(/\s/g, '').split(',');
+      if (this.monthNames) {
+        return this.monthNames.replace(/\s/g, '').split(',');
       }
 
       return;
@@ -446,9 +476,9 @@ export default {
       let firstYear;
       const step = this.stepYear || 1;
 
-      if (this.min) {
+      if (this.minYear) {
         firstYear = this.minDate.getFullYear();
-      } else if (this.default) {
+      } else if (this.value) {
         firstYear = this.specifiedDate.getFullYear();
       } else {
         firstYear = new Date().getFullYear();
@@ -456,7 +486,7 @@ export default {
 
       // Create a range of years to loop through which is either the maximum
       // date minus the first year, or simply 100.
-      let through = this.max ? this.maxDate.getFullYear() + 1 - firstYear : 101;
+      let through = this.maxYear ? this.maxDate.getFullYear() + 1 - firstYear : 101;
 
       let years = [];
 
@@ -468,8 +498,8 @@ export default {
         year => year == this.specifiedDate.getFullYear()
       );
 
-      if (!is_year_on_list && this.default) {
-        if (this.specifiedDate.getFullYear() < this.min) {
+      if (!is_year_on_list && this.value) {
+        if (this.specifiedDate.getFullYear() < this.minYear) {
           years.unshift(this.specifiedDate.getFullYear());
         } else {
           years.push(this.specifiedDate.getFullYear());
@@ -572,10 +602,10 @@ export default {
       // used instead of the current day.
       let date;
 
-      if (!this.default) {
+      if (!this.value) {
         return;
-      } else if (this.default) {
-        date = new Date(this.default);
+      } else if (this.value) {
+        date = new Date(this.value);
       } /*else {
               date = new Date();
             }*/
@@ -622,15 +652,16 @@ export default {
   margin: 5px 0;
 }
 
-.repo-datetime-vue-wrapper {
-}
-
 .repo-datetime-vue-select-wrapper {
   position: relative;
   width: 50px;
   display: inline-block;
   padding-right: 14px;
   text-align: center;
+}
+
+.repo-datetime-vue-select:hover, select:hover {
+  cursor: pointer;
 }
 
 .repo-datetime-vue-select-wrapper .repo-datetime-vue-select {

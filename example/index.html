@@ -14,12 +14,12 @@
       </p>
       <div style="width: 45%; ">
         <Vue-Datetime-Picker2
-          default=""
-          :min="1960"
-          :max="2019"
+          value=""
+          :min-year="1960"
+          :max-year="2025"
           :step-year="10"
           :step-hour="4"
-          :step-minute="15"
+          :step-minute="10"
           :step-second="15"
           v-model="selectedDate"
           :months-names="months"
