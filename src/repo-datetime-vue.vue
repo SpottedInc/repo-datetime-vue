@@ -354,6 +354,19 @@ export default {
 
       let output = this.outputFormat;
 
+      if (this.emptyIfNoInput &&
+        (
+          (output.indexOf('y') !== -1 && this.selectedYear === '') ||
+          (output.indexOf('m') !== -1 && this.selectedMonth === '') ||
+          (output.indexOf('d') !== -1 && this.selectedDay === '') ||
+          (output.indexOf('h') !== -1 && this.selectedHour === '') ||
+          (output.indexOf('i') !== -1 && this.selectedMinute === '') ||
+          (output.indexOf('s') !== -1 && this.selectedSecond === '')
+        )
+      ) {
+        return '';
+      }
+
       output = output.replace(/y/gi, year);
       output = output.replace(/m/gi, month);
       output = output.replace(/d/gi, day);
