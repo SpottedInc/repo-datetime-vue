@@ -89,15 +89,15 @@ Attribute | Required | Type | Remark
 --------- | -------- | ---- | ------
 id | Optional | `String` |
 name | Optional | `String` |
-value | Optional | `String` | **(rename to value)**
-minYear | Optional | `Number` | **(rename to minYear)** Set the minimum year to show in the list
-maxYear | Optional | `Number` | **(rename to maxYear)** Set the maximum year to show in the list
-stepYear | Optional | `Number` | The interval between consecutive years in the list <br> (e.g. :step="5" ----> ...1995, 2000, 2005, 2010...)
-stepMonth | Optional | `Number` | The interval between consecutive months in the list<br> (e.g. :step="3" ----> 01, 04, 07, 10)
-stepDay | Optional | `Number` | The interval between consecutive days in the list<br> (e.g. :step="5" ----> 01, 06, 11, ... 31)
-stepHour | Optional | `Number` | The interval between consecutive hours in the list<br> (e.g. :step="5" ----> 00, 05,10 ... )
-stepMinute | Optional | `Number` | The interval between consecutive minutes in the list<br> (e.g. :step="5" ----> 00, 05 ... 15 ...)
-stepSecond | Optional | `Number` | The interval between consecutive seconds in the list<br> (e.g. :step="5" ----> 00, 05 ... 15 ...)
+value | Optional | `String` | Set the initial date & time to show in the following formate: `yyyy-mm-dd hh:ii:ss` <br> (e.g. `2019:03:11 14:46:00`)
+minYear | Optional | `Number` | Set the minimum year to show in the list <br>(e.g. 1990)
+maxYear | Optional | `Number` | Set the maximum year to show in the list <br>(e.g. 1990)
+stepYear | Optional | `Number` | The interval between consecutive years in the list <br> (e.g. :stepYear="5" ----> ...1995, 2000, 2005, 2010...)
+stepMonth | Optional | `Number` | The interval between consecutive months in the list<br> (e.g. :stepMonth="3" ----> 01, 04, 07, 10)
+stepDay | Optional | `Number` | The interval between consecutive days in the list<br> (e.g. :stepDay="5" ----> 01, 06, 11, ... 31)
+stepHour | Optional | `Number` | The interval between consecutive hours in the list<br> (e.g. :stepHour="5" ----> 00, 05,10 ... )
+stepMinute | Optional | `Number` | The interval between consecutive minutes in the list<br> (e.g. :stepMinute="5" ----> 00, 05 ... 15 ...)
+stepSecond | Optional | `Number` | The interval between consecutive seconds in the list<br> (e.g. :stepSecond="5" ----> 00, 05 ... 15 ...)
 monthNames | Optional | `String` | Comma separated string with month names to be displayed in the month list. E.g Jan, Feb, Mar, ..., Dec
 yearSuffix | Optional | `String` | A string attached after the year name, e.g 2000年
 monthSuffix | Optional | `String` | A string attached after the year name, e.g 01月
